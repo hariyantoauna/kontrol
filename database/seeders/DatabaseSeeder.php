@@ -45,14 +45,14 @@ class DatabaseSeeder extends Seeder
         // $teacher_admin->syncRoles(['admin', 'teacher', 'editor',  'depolover']);
 
         $guru = User::create([
-            'name' => 'Erwin',
-            'email' => 'erwinvictor00@gmail.com',
+            'name' => 'Nuriyati Hamzah',
+            'email' => 'nuriyatimey@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('sukses123'),
             'remember_token' => Str::random(10),
         ]);
 
-        $guru->syncRoles(['admin','teacher']);
+        $guru->syncRoles(['admin', 'teacher']);
 
         // $siswa = User::create([
         //     'name' => 'Siswa',

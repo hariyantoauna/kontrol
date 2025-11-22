@@ -51,22 +51,24 @@
                 {{-- Konten Timeline --}}
                 <div class="mb-2">
                     @if ($item['type'] === 'post')
-                    <p class="mb-2">{{ $item['post'] }}</p>
+                    <div class="mb-2">
+                        {!! $item['post'] !!}
+                    </div>
                     @elseif ($item['type'] === 'canva')
-                    <p>{{ $item['post'] }}</p>
+                    {!! $item['post'] !!}
                     <div class="ratio ratio-16x9 mb-3">
                         <iframe src="{{ str_replace('/watch', '/view?embed', $item['canva_url']) }}"
                             style="border: none;" allowfullscreen>
                         </iframe>
                     </div>
                     @elseif ($item['type'] === 'video')
-                    <p>{{ $item['post'] }}</p>
+                    {!! $item['post'] !!}
                     <div class="ratio ratio-16x9 mb-3">
                         <iframe src="{{ $item['video_url'] }}" style="border: none;" allowfullscreen>
                         </iframe>
                     </div>
                     @elseif ($item['type'] === 'pdf')
-                    <p>{{ $item['post'] }}</p>
+                    {! $item['post'] !}
                     <div class="ratio ratio-16x9 mb-3">
                         <iframe src="{{ $item['pdf_url'] }}" style="border: none;" allowfullscreen>
                         </iframe>

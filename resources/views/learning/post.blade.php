@@ -65,7 +65,7 @@
 
             {{-- Post (jika ada) --}}
             @if (!empty($item['post']))
-            <p class="mb-3 fs-5 text-dark">{{ $item['post'] }}</p>
+            {!! $item['post'] !!}
             @endif
 
             {{-- Desain video atau url --}}

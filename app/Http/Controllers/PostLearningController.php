@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PostLearningController extends Controller
 {
-   public function index(Course $course)
+    public function index(Course $course)
     {
         //
 
 
 
 
-        $timelines = Post::where(['course_id'=> $course->id, 'active'=> 1])->latest()->get();
+        $timelines = Post::where(['course_id' => $course->id, 'active' => 1])->latest()->get();
         // dd($timeline);
 
         $data = [
@@ -35,7 +35,7 @@ class PostLearningController extends Controller
         // dd($request);
 
         $request->validate([
-           
+
             'post' => 'required|string',
         ]);
 
@@ -43,7 +43,7 @@ class PostLearningController extends Controller
 
         Post::create([
             'user_id' => Auth::user()->id,
-           
+
             'course_id' => $request->course_id,
             'post' => $request->post,
             'code' => 3 . time(),

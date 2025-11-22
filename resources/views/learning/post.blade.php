@@ -49,6 +49,10 @@
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                @include('learning.edit_post')
+
+
                 @if (auth()->id() === $item->user_id ||
                 auth()->user()->hasAnyRole(['teacher', 'admin']))
                 <form action="{{ route('soft.delete', ['model' => 'post', 'id' => $item->id]) }}" method="POST"
@@ -59,17 +63,39 @@
                 </form>
                 @endif
 
+
+
+
             </div>
 
 
 
-            {{-- Post (jika ada) --}}
-            @if (!empty($item['post']))
-            {!! $item['post'] !!}
-            @endif
 
-            {{-- Desain video atau url --}}
+            <div id="post-content-{{ $item->id }}">
+                @if (!empty($item['post']))
+                {!! $item['post'] !!}
+                @endif
+            </div>
 
+            <div class="mt-4" id="post-edit-{{ $item->id }}" style="display: none;">
+                <form action="{{ route('post.update', $item->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <textarea name="post" id="summernote-{{ $item->id }}"
+                        class="form-control @error('post') is-invalid @enderror" rows="7"
+                        required>{!! old('post', $item->post) !!}</textarea>
+
+                    <div class="mt-2 d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="cancelEdit({{ $item->id }})">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
 
 
 
@@ -133,4 +159,34 @@
     </div>
     @endforeach
 </div>
+
+
+<script>
+    function editPost(id) {
+    document.getElementById('post-content-' + id).style.display = 'none';
+    document.getElementById('post-edit-' + id).style.display = 'block';
+}
+
+function cancelEdit(id) {
+    document.getElementById('post-content-' + id).style.display = 'block';
+    document.getElementById('post-edit-' + id).style.display = 'none';
+}
+</script>
+
+<script>
+    function editPost(id) {
+    document.getElementById('post-content-' + id).style.display = 'none';
+    document.getElementById('post-edit-' + id).style.display = 'block';
+
+    $('#summernote-' + id).summernote({
+        height: 200
+    });
+}
+
+function cancelEdit(id) {
+    $('#summernote-' + id).summernote('destroy');
+    document.getElementById('post-content-' + id).style.display = 'block';
+    document.getElementById('post-edit-' + id).style.display = 'none';
+}
+</script>
 @endsection

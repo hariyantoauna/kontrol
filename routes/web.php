@@ -48,9 +48,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('home/learning/{course}', [HomeLearningController::class, 'index'])->name('home.index');
 
-     Route::get('post/learning/{course}', [PostLearningController::class, 'index'])->name('post.index');
+    Route::get('post/learning/{course}', [PostLearningController::class, 'index'])->name('post.index');
 
     Route::post('post', [PostLearningController::class, 'store'])->name('post.store');
+    Route::put('post/update/{id}', [PostLearningController::class, 'update'])->name('post.update');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -91,6 +92,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/course/{course}/revoke', [CourseController::class, 'revoke'])->name('course.revoke');
     Route::post('/course/{course}/approve', [CourseController::class, 'approve'])->name('course.approve');
+});
+
+
+Route::middleware('auth', 'role:admin|teacher')->group(function () {
+
 
 
 
@@ -117,6 +123,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::delete('/soft-delete/{model}/{id}', [SoftDeleteController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('soft.delete');
+        ->middleware('auth')
+        ->name('soft.delete');
 });

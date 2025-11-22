@@ -52,4 +52,24 @@ class PostLearningController extends Controller
 
         return back()->with('success', 'Post berhasil dikirim!');
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'post' => 'required|string',
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        // Cek apakah user berhak mengedit
+        if ($post->user_id !== Auth::id() && !Auth::user()->hasAnyRole(['teacher', 'admin'])) {
+            return abort(403, 'Anda tidak memiliki izin mengedit post ini.');
+        }
+
+        $post->post = $request->post;
+        $post->save();
+
+        return redirect()->back()->with('success', 'Post berhasil diperbarui!');
+    }
 }
